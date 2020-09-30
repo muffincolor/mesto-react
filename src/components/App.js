@@ -30,7 +30,7 @@ function App() {
                 setUserData(userData);
             })
             .catch((error) => new Error(`Ошибка: ${error}`));
-    });
+    }, []);
 
     function handleEditAvatarClick() {
         setIsEditAvatarPopupOpen(true);

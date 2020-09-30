@@ -1,6 +1,5 @@
 import React from 'react';
 import profileImage from '../images/image.jpg';
-import api from "../utils/api";
 
 function Main(props) {
   const [userName, setUserName] = React.useState('Жак-Ив Кусто');
@@ -8,13 +7,10 @@ function Main(props) {
   const [userAvatar, setUserAvatar] = React.useState(profileImage);
 
   React.useEffect(() => {
-    api.getProfileInfo()
-      .then(values => {
-        setUserName(values.name);
-        setUserDescription(values.about);
-        setUserAvatar(values.avatar);
-    });
-  });
+      setUserName(props.userData.name);
+      setUserDescription(props.userData.about);
+      setUserAvatar(props.userData.avatar);
+  }, [props.userData]);
 
   return (
     <main className="profile">

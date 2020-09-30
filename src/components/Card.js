@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Elements(props) {
+function Card(props) {
   return (
     <li className="element" id={props.item._id}>
       <img alt="Фото места" className="element__photo" src={props.item.link} onClick={() => props.onCardClick({ image: props.item.link, caption: props.item.name})}/>
@@ -13,4 +13,4 @@ function Elements(props) {
   );
 }
 
-export default Elements;
+export default Card;

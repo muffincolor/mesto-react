@@ -6,6 +6,7 @@ function EditProfilePopup(props) {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const currentUser = React.useContext(CurrentUserContext);
+  const { setLoadingStatus, onUpdateUser, onClose, isLoading, isOpen} = props;
 
   React.useEffect(() => {
     setName(currentUser.name);
@@ -22,9 +23,9 @@ function EditProfilePopup(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.setLoadingStatus(true);
+    setLoadingStatus(true);
 
-    props.onUpdateUser({
+    onUpdateUser({
       name,
       about: description,
     });
@@ -32,8 +33,8 @@ function EditProfilePopup(props) {
 
   return (
     <PopupWithForm name='edit' title='Редактировать профиль'
-                   isOpen={props.isOpen}
-                   onClose={props.onClose}
+                   isOpen={isOpen}
+                   onClose={onClose}
                    onSubmit={handleSubmit}>
       <input type="text"
              name="name"
@@ -59,7 +60,7 @@ function EditProfilePopup(props) {
              required/>
       <span className="popup__error_visible"
             id="activities-input-error"/>
-      <button type="submit" className="popup__button">{props.isLoading ? 'Сохранение...' : 'Изменить'}</button>
+      <button type="submit" className="popup__button">{isLoading ? 'Сохранение...' : 'Изменить'}</button>
     </PopupWithForm>
   );
 }

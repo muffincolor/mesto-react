@@ -2,19 +2,21 @@ import React from 'react';
 import PopupWithForm from "./PopupWithForm";
 
 function ConfirmationPopup(props) {
+  const { setLoadingStatus, cardForDelete, deleteFunction, isLoading, isOpen, onClose} = props;
+
   function handleSubmit(e) {
     e.preventDefault();
-    props.setLoadingStatus(true);
-    props.deleteFunction(props.cardForDelete);
+    setLoadingStatus(true);
+    deleteFunction(cardForDelete);
   }
 
   return (
     <PopupWithForm name='confirmation'
                    title='Вы уверены?'
-                   isOpen={props.isOpen}
-                   onClose={props.onClose}
+                   isOpen={isOpen}
+                   onClose={onClose}
                    onSubmit={handleSubmit}>
-      <button type="submit" className="popup__button">{props.isLoading ? 'Удаление...' : 'Да'}</button>
+      <button type="submit" className="popup__button">{isLoading ? 'Удаление...' : 'Да'}</button>
     </PopupWithForm>
   );
 }

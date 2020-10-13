@@ -17,6 +17,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = React.useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [selectedCardForDelete, setSelectedCardForDelete] = React.useState({});
   const [popupLoading, setPopupLoading] = React.useState(false);
@@ -25,6 +26,7 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
 
   function handleCardClick(data) {
+    setIsImagePopupOpen(true);
     setSelectedCard(data);
   }
 
@@ -79,7 +81,10 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsConfirmationPopupOpen(false);
-    setSelectedCard({});
+    setIsImagePopupOpen(false);
+    setTimeout(() => {
+      setSelectedCard({});
+    }, 500);
     setPopupLoading(false);
   }
 
@@ -99,7 +104,7 @@ function App() {
 
   function handleAddPlaceSubmit(data) {
     api.addNewCard(data).then((response) => {
-      setCards([...cards, response]);
+      setCards([response, ...cards]);
       closeAllPopups();
     }).catch(err => new Error(err));
   }
@@ -117,7 +122,8 @@ function App() {
                   onCardLike={handleCardLike}
                   onCardDelete={handleCardDelete}/>
         <Footer/>
-        <ImagePopup card={selectedCard}
+        <ImagePopup isOpen={isImagePopupOpen}
+                    card={selectedCard}
                     onClose={closeAllPopups}/>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}
                           isLoading={popupLoading} setLoadingStatus={setPopupLoading}/>

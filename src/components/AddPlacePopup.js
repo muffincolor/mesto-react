@@ -4,6 +4,7 @@ import PopupWithForm from "./PopupWithForm";
 function AddPlacePopup(props) {
   const [title, setTitle] = React.useState('');
   const [url, setUrl] = React.useState('');
+  const { isLoading, isOpen, onAddPlace, onClose, setLoadingStatus} = props;
 
   function handleUrlChange(e) {
     setUrl(e.target.value);
@@ -15,9 +16,9 @@ function AddPlacePopup(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.setLoadingStatus(true);
+    setLoadingStatus(true);
 
-    props.onAddPlace({
+    onAddPlace({
       name: title,
       link: url
     });
@@ -26,8 +27,8 @@ function AddPlacePopup(props) {
   return (
     <PopupWithForm name='add'
                    title='Новое место'
-                   isOpen={props.isOpen}
-                   onClose={props.onClose}
+                   isOpen={isOpen}
+                   onClose={onClose}
                    onSubmit={handleSubmit}>
       <input type="text"
              name="title"
@@ -46,7 +47,7 @@ function AddPlacePopup(props) {
              required id="url-input"/>
       <span className="popup__error_visible"
             id="url-input-error"/>
-      <button type="submit" className="popup__button">{props.isLoading ? 'Сохранение...' : 'Добавить'}</button>
+      <button type="submit" className="popup__button">{isLoading ? 'Сохранение...' : 'Добавить'}</button>
     </PopupWithForm>
   );
 }

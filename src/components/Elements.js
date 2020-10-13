@@ -4,14 +4,15 @@ import {CardContext} from "../contexts/CardContext";
 
 function Elements(props) {
   const cards = React.useContext(CardContext);
+  const { onCardDelete, onCardLike, onCardClick } = props;
 
   return (
     <section className="elements">
       <ul className="elements__block">
         {
-          Array.from(cards).map((item, index) => {
-            return (<Card onCardDelete={props.onCardDelete} onCardLike={props.onCardLike} item={item} key={index}
-                          onCardClick={props.onCardClick}/>);
+          Array.from(cards).map((item) => {
+            return (<Card onCardDelete={onCardDelete} onCardLike={onCardLike} item={item} key={item._id}
+                          onCardClick={onCardClick}/>);
           })
         }
       </ul>

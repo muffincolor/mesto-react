@@ -3,6 +3,7 @@ import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup(props) {
   const linkRef = React.useRef('');
+  const { isLoading, isOpen, onClose, onUpdateAvatar, setLoadingStatus} = props;
 
   function handleLinkChange(e) {
     linkRef.current = e.target.value;
@@ -10,9 +11,9 @@ function EditAvatarPopup(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.setLoadingStatus(true);
+    setLoadingStatus(true);
 
-    props.onUpdateAvatar({
+    onUpdateAvatar({
       avatar: linkRef.current,
     });
   }
@@ -20,8 +21,8 @@ function EditAvatarPopup(props) {
   return (
     <PopupWithForm name='avatar'
                    title='Обновить аватар'
-                   isOpen={props.isOpen}
-                   onClose={props.onClose}
+                   isOpen={isOpen}
+                   onClose={onClose}
                    onSubmit={handleSubmit}>
       <input type="text"
              name="link"
@@ -35,7 +36,7 @@ function EditAvatarPopup(props) {
              id="link-input"/>
       <span className="popup__error_visible"
             id="link-input-error"/>
-      <button type="submit" className="popup__button">{props.isLoading ? 'Сохранение...' : 'Сохранить'}</button>
+      <button type="submit" className="popup__button">{isLoading ? 'Сохранение...' : 'Сохранить'}</button>
     </PopupWithForm>
   );
 }

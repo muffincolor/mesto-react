@@ -3,28 +3,29 @@ import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 function Card(props) {
   const userInfo = React.useContext(CurrentUserContext);
-  const isOwn = props.item.owner._id === userInfo._id;
-  const isLiked = props.item.likes.some(i => i._id === userInfo._id);
+  const { item, onCardClick, onCardDelete, onCardLike } = props;
+  const isOwn = item.owner._id === userInfo._id;
+  const isLiked = item.likes.some(i => i._id === userInfo._id);
 
   function handleLikeClick(evt) {
-    props.onCardLike(props.item);
+    onCardLike(item);
   }
 
   function handleDeleteClick(evt) {
-    props.onCardDelete(props.item);
+    onCardDelete(item);
   }
 
   return (
-    <li className="element" id={props.item._id}>
+    <li className="element" id={item._id}>
       <button onClick={handleDeleteClick}
               className={`element__delete-button ${isOwn ? 'element__delete-button_visible' : 'element__delete-button_hidden'}`}/>
-      <img alt="Фото места" className="element__photo" src={props.item.link}
-           onClick={() => props.onCardClick({image: props.item.link, caption: props.item.name})}/>
+      <img alt="Фото места" className="element__photo" src={item.link}
+           onClick={() => onCardClick({image: item.link, caption: item.name})}/>
       <div className="element__info">
-        <h2 className="element__title">{props.item.name}</h2>
+        <h2 className="element__title">{item.name}</h2>
         <button onClick={handleLikeClick}
                 className={`element__like-button ${isLiked ? 'element__like-button_status_active' : ''}`}/>
-        <span className="element__likes">{props.item.likes.length}</span>
+        <span className="element__likes">{item.likes.length}</span>
       </div>
     </li>
   );

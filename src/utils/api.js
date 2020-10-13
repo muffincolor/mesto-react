@@ -26,7 +26,7 @@ class Api {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this.headers,
-      body: JSON.stringify({avatar: userPhotoLink})
+      body: JSON.stringify(userPhotoLink)
     })
       .then(res => {
         return this._getResponseData(res);
@@ -78,24 +78,24 @@ class Api {
     })
   }
 
-  likeCard(cardId) {
-    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
-      method: 'PUT',
-      headers: this.headers
-    })
-      .then(res => {
-        return this._getResponseData(res);
+  changeLikeCardStatus(cardId, status) {
+    if(status) {
+      return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+        method: 'PUT',
+        headers: this.headers
       })
-  }
-
-  unLikeCard(cardId) {
-    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
-      method: 'DELETE',
-      headers: this.headers
-    })
-      .then(res => {
-        return this._getResponseData(res);
+        .then(res => {
+          return this._getResponseData(res);
+        })
+    } else {
+      return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+        method: 'DELETE',
+        headers: this.headers
       })
+        .then(res => {
+          return this._getResponseData(res);
+        })
+    }
   }
 }
 
